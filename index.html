@@ -1,30 +1,103 @@
 <!DOCTYPE html>
-<html lang="">
+<html lang="en">
 
 <head>
+    <!-- Required meta tags -->
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lab 1</title>
-    
-    <!-- Leaflet -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <title>GEOG-575 Lab 1: Space-time Prop Symbols Map w/ Leaflet &amp; JQuery</title>
+
+    <link rel="shortcut icon" href="" type="image/x-icon">
+    <link rel="apple-touch-icon" href="">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <!-- Leaflet Style -->
     <link rel=stylesheet href="lib/leaflet/leaflet.css">
-    <script src="lib/leaflet/leaflet.js"></script>
-    
-    <!-- Custom CSS -->
+
+    <!-- Custom Styles -->
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/map.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=News+Cycle|Oswald&display=swap" rel="stylesheet">
+
 </head>
 
 <body>
-    <div id="map"></div>
-    
-    <div id="panel"></div>
-    <div id="controls"></div>
-    
-    <!-- jquery -->
-    <script src="lib/jquery/jquery-3.4.1.min.js"></script>
-    
-    <!-- scripts -->
-    <script src="js/geojson.js"></script>
-</body>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1>COVID-19</h1>
+            <hr>
+            <div class="subtitle">
+                <p>The spread of the Wuhan coronavirus</p>
+                <p>Jan 20 - Feb 20, 2020</p>
+            </div>
+            <div id="byline" class="subtitle">
+                <p>By Daniel Fourquet</p>
+                <p>GEOG-575: Lab 1</p>
+                <p>March 1, 2020</p>
+            </div>
+        </div>
+    </div>
 
-</html>
+    <div class="container main">
+        <div class="row">
+            <div class="col-md-2 my-auto text-center">
+                <img class="img-fluid img-thumbnail" src="https://placeimg.com/640/480/tech">
+            </div>
+            <div class="col-md-10">
+                <h4>Some heading</h4>
+                <p>(Doc turns around and spots a woman on a buckboard that's gone out of control. He jumps on his horse.) Great Scott! (he takes off after her) Git! (follows Doc) Hah! (Doc catches up with the woman and motions for her to jump onto his horse.) Jump!</p>
+                <p>(Hallway) (Marty runs out of the room and sees the elevator. He runs to it, just as 3-D, Match and Skinhead come out of it.) 3-Hey, get back here! Hey, hey! (Marty runs to the stairs and runs down them. The gang follows him. Marty switches to the other flight of stairs and climbs back up. Biff's cronies do not realize he's done this and carry on downwards. Marty, now back at the top of the stairs, goes out onto the roof. Biff enters. He sees the door to the roof closing and realizes where Marty is.)</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <p>Yes Marty, I know. (Doc’s Garage) (It’s a mess. Doc opens a book. ‘Hill Valley Telegraph Archives March 1st - April 30th 1973’. On the page he turns to is a headline – “Local Author Shot Dead.” We stay focused on the paper as Doc speaks.) (v.o) I went to the public library to try and make sense out of all the madness. The place was boarded up, shut down, so I broke in and borrowed some newspapers. I don't get it Doc, I mean how can this be happening? It's like we're in hell or something.</p>
+                <p>Look, a video game! I got it working. My dad told me about these. It is Wild Gunman. (He walks over to the game.) How do you play this thing? Let me show you kid. (He takes his hat off and throws it on top of the game.) I'm a crack shot at this.</p>
+            </div>
+            <div class="col-md-4 my-auto text-center">
+                <img class="img-fluid img-thumbnail" src="https://placeimg.com/300/150">
+            </div>
+        </div>
+        <hr>
+        <button id="btnTest">Test</button>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="map-container">
+                    <h4>The map title will go here</h4>
+                    <div id="map"></div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+            <div class="col-md-8">
+                <p>Yes Marty, I know. (Doc’s Garage) (It’s a mess. Doc opens a book. ‘Hill Valley Telegraph Archives March 1st - April 30th 1973’. On the page he turns to is a headline – “Local Author Shot Dead.” We stay focused on the paper as Doc speaks.) (v.o) I went to the public library to try and make sense out of all the madness. The place was boarded up, shut down, so I broke in and borrowed some newspapers. I don't get it Doc, I mean how can this be happening? It's like we're in hell or something.</p>
+                <p>Look, a video game! I got it working. My dad told me about these. It is Wild Gunman. (He walks over to the game.) How do you play this thing? Let me show you kid. (He takes his hat off and throws it on top of the game.) I'm a crack shot at this.</p>
+            </div>
+            <div class="col-md-4 my-auto text-center">
+                <img class="img-fluid img-thumbnail" src="https://placeimg.com/300/150">
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Coding End -->
+
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="lib/jquery/jquery-3.4.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <!-- Leaflet -->
+
+    <script src="lib/leaflet/leaflet.js"></script>
+    <script src="js/map.js"></script>
+</body></html>
