@@ -20,6 +20,7 @@
     <link rel=stylesheet href="lib/leaflet/leaflet.css">
 
     <!-- Custom Styles -->
+    <link rel=stylesheet href="css/range.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="css/map.css">
 
@@ -67,15 +68,47 @@
             </div>
         </div>
         <hr>
-        <button id="btnTest">Test</button>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-8">
                 <div class="map-container">
-                    <h4>The map title will go here</h4>
+                    <h4>Confirmed Cases of COVID-19 - <span id="lblCurrentDate"></span></h4>
                     <div id="map"></div>
+                </div>
+                <div class="slide-container">
+                    <button id="btnPrev" class="skip"></button>
+                    <input id="slider" type="range" class="range" min="0" max="31" value="0">
+                    <button id="btnNext" class="skip"></button>
+                </div>
+                <h3 id="lblSliderHint" class="sliderHint">Adjust slider to change date</h3>
+            </div>
+
+            <div class="col-md-4">
+                <div class="details-container">
+                    <h4>Region Details</h4>
+                    <div class="form-group">
+                        <label for="sel1">Select region for details:</label>
+                        <select class="form-control" id="sel1">
+                        </select>
+                        <hr>
+                        <h2 class="lblRegionName">Hubei</h2>
+                        <p>On <i>January 20</i>, <span class="lblRegionName">Hubei</span> had <b id="lblCases">258</b> confirmed cases of COVID-19, which accounted for <b id="lblPercent">X%</b> of the total cases in the world.</p>
+                        <img class="img-fluid img-thumbnail" src="https://placeimg.com/100/100">
+                    </div>
                 </div>
             </div>
         </div>
+<hr>
+        <div class="row">
+            <div class="col-12">
+                <div class="attribution-container">
+                    <p><b>MAP ATTRIBUTION</b></p>
+                    <p><a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> | Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> — Map data © <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors</p>
+                    <p>COVID-19 Data | <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019/situation-reports/" target="_blank">WHO Situation Reports</a>, <a href="https://github.com/globalcitizen/2019-wuhan-coronavirus-data" target="_blank">GlobalCitizen Wuhan Coronavirus Data</a></p>
+                </div>
+            </div>
+
+        </div>
+
         <hr>
         <div class="row">
             <div class="col-md-8">

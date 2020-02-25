@@ -1,26 +1,103 @@
 .map-container {
     max-width: 500px;
     margin: auto;
+    margin-bottom: 15px;
+}
+
+.map-container h4 {
+    font-size: 1rem;
 }
 
 #map {
-    height: 500px;
+    height: 350px;
     max-width: 500px;
     background-color: #d9d9d9;
     margin-top: -8px;
 }
 
 .markerChina {
-    width: 20px;
-    height: 20px;
+    width: 0px;
+    height: 0px;
     border-radius: 50%;
-    margin: auto;
-    background-color: rgba(255,0,0,0.7);
-    box-shadow: inset 0px 0px 10px 2px rgba(0,0,0,0.5);
+    margin-left: 0px;
+    margin-top: 0px;
+    background-color: rgba(255, 0, 0, 0.7);
+    box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
+}
+
+.markerWorld {
+    width: 0px;
+    height: 0px;
+    border-radius: 50%;
+    margin-left: 0px;
+    margin-top: 0px;
+    background-color: rgba(87, 39, 12, 0.7);
+    box-shadow: inset 0px 0px 10px 2px rgba(0, 0, 0, 0.5);
 }
 
 .leaflet-div-icon {
-    background: rgba(0,0,0,0);
+    background: rgba(0, 0, 0, 0);
     margin: 0px;
     border: 0px;
+}
+
+/* Slider */
+.slide-container {
+    max-width: 500px;
+    margin-top: 10px;
+    text-align: center;
+    margin: auto;
+}
+
+#slider {
+    /* Override default CSS styles */
+    -webkit-appearance: none;
+    appearance: none;
+    background: #d3d3d3;
+    width: 75%;
+    border-radius: 10px;
+    height: 20px;
+    display: inline-block;
+}
+
+#btnPrev {
+    float: left;
+    display: inline-block;
+    background-image: url("prev.png");
+}
+
+#btnNext {
+    float: right;
+    display: inline-block;
+    background-image: url("next.png");
+    
+}
+
+.skip {
+    height: 20px;
+    width: 20px;
+    background-size: 90%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color:transparent;
+    border: 0;
+}
+
+.leaflet-popup-content p {
+    margin: 0px;
+}
+
+#lblSliderHint {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1rem;
+}
+
+.sliderHint {
+    color: rgba(0,0,0,0.5);
+}
+
+.hideHint {
+    color: rgba(0,0,0,0);
+    transition: color 1s;
 }

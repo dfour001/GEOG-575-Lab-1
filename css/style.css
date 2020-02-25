@@ -77,3 +77,35 @@ body {
 .main col-md-* {
     background-color: aqua;
 }
+
+/* Region Details Box */
+.details-container {
+    margin: auto;
+    background-color: white;
+}
+
+.details-container h4 {
+    font-size: 1rem;
+}
+
+.details-container label {
+    font-size: 0.75rem;
+}
+
+.form-group {
+    margin: 15px;
+}
+
+/* Attribution Box */
+.attribution-container {
+    font-size: 0.75rem;
+}
+
+.attribution-container p{
+    margin: 0px;
+    margin-left: 10px
+}
+
+.attribution-container p:first-child {
+    margin-left: 0px;
+}
