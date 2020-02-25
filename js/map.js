@@ -22,14 +22,20 @@ function init() {
         dataType: 'json',
         success: function (r) {
             let attributes = process_data(r);
+            
             // Set up markers and add them to map
             add_data_to_map(r, map, attributes);
 
             // Set lblCurrentDate
-            $('#lblCurrentDate').html(attributes[0]);
+            $('#lblCurrentDate').html(format_date(attributes[0]));
 
             // Populate details dropdown
             setup_details_dropdown(map);
+            
+            // Set default details to Hubei
+            $('#sel1').val('Hubei');
+            update_details_box(map, attributes);
+            
 
 
             /////////////////////////
@@ -48,8 +54,8 @@ function init() {
                 update_markers(map, attributes[sliderVal]);
 
                 // Update date
-                $('#lblCurrentDate').html(attributes[sliderVal]);
-                
+                $('#lblCurrentDate').html(format_date(attributes[sliderVal]));
+
                 // Update details
                 update_details_box(map, attributes);
 
@@ -77,8 +83,8 @@ function init() {
                 update_markers(map, attributes[sliderVal]);
 
                 // Update date
-                $('#lblCurrentDate').html(attributes[sliderVal]);
-                
+                $('#lblCurrentDate').html(format_date(attributes[sliderVal]));
+
                 // Update details
                 update_details_box(map, attributes);
 
@@ -98,11 +104,11 @@ function init() {
 }
 
 
-function add_data_to_map(r, map, attributes) {
+function add_data_to_map(r, map, attributes, piechart) {
     // Add China layer
     L.geoJSON(r, {
         pointToLayer: function (f, latlng) {
-            return create_marker(f, latlng, "markerChina")
+            return create_marker(f, latlng, "markerChina", attributes, map)
         },
         filter: function (f) {
             if (f.properties.Layer == "China") {
@@ -114,7 +120,7 @@ function add_data_to_map(r, map, attributes) {
     // Add World layer
     L.geoJSON(r, {
         pointToLayer: function (f, latlng) {
-            return create_marker(f, latlng, "markerWorld");
+            return create_marker(f, latlng, "markerWorld", attributes, map);
         },
         filter: function (f) {
             if (f.properties.Layer == "World") {
@@ -151,10 +157,6 @@ function update_markers(map, attribute) {
 
             // Update radius
             layer.setRadius(rad);
-
-            // Update popup
-            let popupContent = get_popup(layer.feature, attribute);
-            layer.bindPopup(popupContent);
         }
     })
 }
@@ -192,10 +194,10 @@ function setup_details_dropdown(map) {
 }
 
 
-function update_details_box(map, attributes) {
+function update_details_box(map, attributes, piechart) {
     // Get current region
     let region = $('#sel1').val();
-    
+
     // Get current date
     let index = $('#slider').val()
     let curDate = attributes[index];
@@ -212,21 +214,37 @@ function update_details_box(map, attributes) {
 
             if (curLayerName == region) {
                 currentRegionCount = curLayerCount;
-            };
+                layer.setStyle({
+                    stroke: true,
+                    color: 'rgb(0,0,0)',
+                    weight: 3
+                });
+            } else {
+                layer.setStyle({
+                    stroke: false
+                });
+            }
 
             worldCount += curLayerCount;
         }
     });
-    
+
     // Calculate percentage
     let percentage = currentRegionCount / worldCount * 100;
-    
+
     // Update region detail labels
     $('.lblRegionName').html(region);
-    $('#lblCases').html(currentRegionCount);
+    $('#lblCases').html(currentRegionCount.toLocaleString('en'));
     $('#lblPercent').html(percentage.toPrecision(2) + '%');
+    $('#lblDetailsDate').html(format_date(curDate));
+}
 
 
+function format_date(date) {
+    let input = date.split('-');
+    let month = input[0] == 'Jan' ? 'January' : 'February';
+    let day = input[1];
+    return month + ' ' + day
 }
 
 /////////////
@@ -264,7 +282,7 @@ function process_data(r) {
 
 
 
-function create_marker(f, latlng, markerClass) {
+function create_marker(f, latlng, markerClass, attributes, map, piechart) {
     // Set marker style
     let style = markerClass == "markerChina" ? styleChina : styleWorld;
 
@@ -274,21 +292,20 @@ function create_marker(f, latlng, markerClass) {
     // Set the initial marker radius to the value of Jan-20
     marker.setRadius(calculate_radius(f.properties['Jan-20']));
 
-    // Add marker popup
-    let popupContent = get_popup(f, 'Jan-20');
-    marker.bindPopup(popupContent);
+    marker.on({
+        click: function () {
+            // Set value of details dropdown, which will
+            // trigger the details box to update with this
+            // marker's details
+            $('#sel1').val(f.properties.name);
+            update_details_box(map, attributes, piechart);
+        }
+    });
 
     return marker
 };
 
 
-function get_popup(feature, attribute) {
-    // Creates the html for marker popups
-    let regionName = "<b>" + feature.properties.name + "</b>";
-    let confirmedCases = "<p>Confirmed Cases: " + feature.properties[attribute] + "</p>";
-    let output = regionName + confirmedCases;
-    return output
-}
 
 
 

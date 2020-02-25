@@ -99,6 +99,7 @@ body {
 /* Attribution Box */
 .attribution-container {
     font-size: 0.75rem;
+    margin: 15px;
 }
 
 .attribution-container p{
