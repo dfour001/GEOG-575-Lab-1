@@ -70,8 +70,9 @@
         <hr>
         <div class="row">
             <div class="col-md-8">
+                <button id="btnTest">Get Bounds</button>
                 <div class="map-container">
-                    <h4>Confirmed Cases of COVID-19 - <span id="lblCurrentDate"></span>, 2020</h4>
+                    <h4>Confirmed Cases of COVID-19 - <span class="lblCurrentDate"></span>, 2020</h4>
                     <div id="map"></div>
                 </div>
                 <div class="slide-container">
@@ -91,7 +92,7 @@
                         </select>
                         <hr>
                         <h2 class="lblRegionName">Hubei</h2>
-                        <p>On <span id="lblDetailsDate">January 20</span>, <span class="lblRegionName">Hubei</span> had <b id="lblCases">258</b> confirmed cases of COVID-19, which accounted for <b id="lblPercent">X%</b> of the total cases in the world.</p>
+                        <p>On <span class="lblDetailsDate">January 20</span>, <span class="lblRegionName">Hubei</span> had <b class="lblCases">258</b> confirmed cases of COVID-19, which accounted for <b class="lblPercent">X%</b> of the <b class="lblWorldTotal">#</b> total cases in the world.</p>
                     </div>
                     <hr>
                     <div class="attribution-container">
@@ -124,5 +125,7 @@
 
     <!-- Leaflet -->
     <script src="lib/leaflet/leaflet.js"></script>
+
+    <script src="js/CustomControls.js"></script>
     <script src="js/map.js"></script>
 </body></html>

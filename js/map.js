@@ -2,7 +2,10 @@ function init() {
     // Create map
     var map = L.map('map', {
         attributionControl: false
-    }).setView([0, 0], 1);
+    }).fitBounds([
+        [4.2149, 70.1367],
+        [54.7753,154.5117]
+    ]);
 
     // Add tile layer
     L.tileLayer('https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.{ext}', {
@@ -15,7 +18,7 @@ function init() {
 
 
     // Setup custom controls
-
+    map.addControl(new MiniDetailPane());
 
     // Load data
     $.ajax("data/data.geojson", {
@@ -27,7 +30,7 @@ function init() {
             add_data_to_map(r, map, attributes);
 
             // Set lblCurrentDate
-            $('#lblCurrentDate').html(format_date(attributes[0]));
+            $('.lblCurrentDate').html(format_date(attributes[0]));
 
             // Populate details dropdown
             setup_details_dropdown(map);
@@ -43,28 +46,31 @@ function init() {
             /////////////////////////
 
             $('#btnTest').on('click', function () {
-                let rad = 100;
-                update_markers(map, "Feb-1");
+                console.log('test');
+                console.log(map.getBounds());
             });
 
 
             // Slider Change
             $('#slider').on('input', function () {
+                // Hide slider hint
+                $('#lblSliderHint').addClass('lblCurrentDate');
+                
                 let sliderVal = $(this).val();
                 update_markers(map, attributes[sliderVal]);
 
                 // Update date
-                $('#lblCurrentDate').html(format_date(attributes[sliderVal]));
+                $('.lblCurrentDate').html(format_date(attributes[sliderVal]));
 
                 // Update details
                 update_details_box(map, attributes);
-
-                // Hide slider hint
-                $('#lblSliderHint').addClass('hideHint');
             });
 
             // Slider Skip Buttons Click
             $('.skip').on('click', function () {
+                // Hide slider hint
+                $('#lblSliderHint').addClass('lblCurrentDate');
+                
                 let sliderVal = $('#slider').val();
 
                 if ($(this).attr('id') == 'btnPrev') {
@@ -83,15 +89,13 @@ function init() {
                 update_markers(map, attributes[sliderVal]);
 
                 // Update date
-                $('#lblCurrentDate').html(format_date(attributes[sliderVal]));
+                $('.lblCurrentDate').html(format_date(attributes[sliderVal]));
 
                 // Update details
-                update_details_box(map, attributes);
-
-                // Hide slider hint
-                $('#lblSliderHint').addClass('hideHint');
+                update_details_box(map, attributes);                
             });
 
+            
             $('#sel1').on('change', function () {
                 update_details_box(map, attributes);
             })
@@ -168,8 +172,16 @@ function calculate_radius(value) {
     return radius
 }
 
+function calculate_radius_log(value) {
+    let radius = Math.log(value) / Math.log(1.2);
+    return radius
+}
+
 function calculate_opacity(value) {
-    let opacity = (-0.001 * value + 75) / 100;
+    let opacity = (-0.05 * value + 75) / 100;
+    if (opacity < 0.25) {
+        opacity = 0.25;
+    }
     return opacity
 }
 
@@ -234,9 +246,10 @@ function update_details_box(map, attributes, piechart) {
 
     // Update region detail labels
     $('.lblRegionName').html(region);
-    $('#lblCases').html(currentRegionCount.toLocaleString('en'));
-    $('#lblPercent').html(percentage.toPrecision(2) + '%');
-    $('#lblDetailsDate').html(format_date(curDate));
+    $('.lblCases').html(currentRegionCount.toLocaleString('en'));
+    $('.lblPercent').html(percentage.toPrecision(2) + '%');
+    $('.lblWorldTotal').html(worldCount.toLocaleString('en'));
+    $('.lblDetailsDate').html(format_date(curDate));
 }
 
 

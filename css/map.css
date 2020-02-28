@@ -101,3 +101,29 @@
     color: rgba(0,0,0,0);
     transition: color 1s;
 }
+
+
+/* Mini Detail Pane */
+
+.mini-detail-pane {
+    background-color: white;
+    padding: 10px;
+    border-radius: 10px;
+    font-size: 0.75rem;
+    border: 1px solid rgba(0,0,0,0.5);
+}
+
+.mini-detail-pane p {
+    margin: 0px;
+}
+
+.mini-detail-pane hr {
+    margin: 0px;
+}
+
+
+@media only screen and (min-width: 768px) {
+  .mini-detail-pane {
+    display: none;
+  }
+}
