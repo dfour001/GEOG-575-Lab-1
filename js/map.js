@@ -140,27 +140,10 @@ function init() {
 
 
 function add_data_to_map(r, map, attributes, piechart) {
-    // Add China layer
+    // Add point layer
     L.geoJSON(r, {
         pointToLayer: function (f, latlng) {
-            return create_marker(f, latlng, "markerChina", attributes, map)
-        },
-        filter: function (f) {
-            if (f.properties.Layer == "China") {
-                return true
-            }
-        }
-    }).addTo(map);
-
-    // Add World layer
-    L.geoJSON(r, {
-        pointToLayer: function (f, latlng) {
-            return create_marker(f, latlng, "markerWorld", attributes, map);
-        },
-        filter: function (f) {
-            if (f.properties.Layer == "World") {
-                return true
-            }
+            return create_marker(f, latlng, attributes, map)
         }
     }).addTo(map);
 
@@ -192,7 +175,7 @@ function update_markers(map, attribute) {
 
             // Update radius
             layer.setRadius(rad);
-            
+
             // Hide Hubei if box checked
             if (hideHubei && layer.feature.properties.name == "Hubei") {
                 layer.setStyle(noFill);
@@ -351,7 +334,7 @@ function format_date(date) {
 /////////////
 
 // Marker Styles
-var styleChina = {
+var mainStyle = {
     fillColor: 'red',
     weight: 0.5,
     stroke: false
@@ -385,9 +368,9 @@ function process_data(r) {
 
 
 
-function create_marker(f, latlng, markerClass, attributes, map, piechart) {
+function create_marker(f, latlng, attributes, map, piechart) {
     // Set marker style
-    let style = markerClass == "markerChina" ? styleChina : styleWorld;
+    let style = mainStyle;
 
     // Create marker
     let marker = L.circleMarker(latlng, style);
