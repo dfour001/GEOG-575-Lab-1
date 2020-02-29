@@ -160,6 +160,27 @@
 }
 
 
+/* Hide Hubei */
+.hide-hubei {
+    background-color: white;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 5px;
+    padding: 5px;
+    
+}
+
+.hide-hubei label {
+    margin: 0px;
+    margin-left: 5px;
+    font-family: 'Oswald', sans-serif;
+    font-size: 0.65rem;
+}
+
+.hide-hubei input {
+    height: 0.75rem;
+    width: 0.75rem;
+}
+
 @media only screen and (min-width: 768px) {
   .mini-detail-pane {
     display: none;

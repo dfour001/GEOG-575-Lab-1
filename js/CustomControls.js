@@ -15,6 +15,7 @@ var MiniDetailPane = L.Control.extend({
     }
 });
 
+// Legend
 var LegendControl = L.Control.extend({
     options: {
         position: 'bottomright'
@@ -36,12 +37,24 @@ var LegendControl = L.Control.extend({
         
         svg += '</svg>';
         legendBody += svg + '</div>';
-        console.log(legendBody);
         $(container).append(legendBody);
-        
-        console.log($(container).html());
-        
         
         return container
     }
 });
+
+
+// Hide Hubei
+var HideHubeiControl = L.Control.extend({
+    options: {
+        position: 'topright'
+    },
+    
+    onAdd: function(map) {
+        let container = L.DomUtil.create('div', 'hide-hubei');
+        $(container).append('<input type="checkbox" id="hide-hubei-check" name="hide-hubei-check" value="hideHubei">');
+        $(container).append('<label for="hide-hubei-check">Hide Hubei</label>');
+        
+        return container
+    }
+})

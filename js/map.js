@@ -1,3 +1,6 @@
+// Switch to decide if Hubei should be drawn as transparent or not
+var hideHubei = false;
+
 function init() {
     // Create map
     var map = L.map('map', {
@@ -19,6 +22,9 @@ function init() {
 
     // Setup custom controls
     map.addControl(new MiniDetailPane());
+    map.addControl(new HideHubeiControl());
+
+
 
     // Load data
     $.ajax("data/data.geojson", {
@@ -34,15 +40,15 @@ function init() {
 
             // Populate details dropdown
             setup_details_dropdown(map);
-                        
+
             // Create legend
             map.addControl(new LegendControl());
-            
+
             // Set default details to Hubei
             $('#sel1').val('Hubei');
             update_details_box(map, attributes);
 
-            
+
 
 
             /////////////////////////
@@ -53,6 +59,11 @@ function init() {
                 console.log('test');
                 console.log(map.getBounds());
             });
+
+            $('#hide-hubei-check').on('click', function () {
+                hideHubei = !hideHubei;
+                update_markers(map, attributes[$('#slider').val()]);
+            })
 
 
             // Slider Change
@@ -99,27 +110,24 @@ function init() {
                 update_details_box(map, attributes);
             });
 
-            
+
             // Details selector dropdown
             $('#sel1').on('change', function () {
                 update_details_box(map, attributes);
             })
 
-            
+
             // Legend Collapse Button
-            $('#collapse').on('click', function() {
+            $('#collapse').on('click', function () {
                 let legendState = $(this).attr('data-status');
                 if (legendState == "open") {
                     // Collapse the legend
                     $(this).attr('data-status', 'closed');
-                    $(this).attr('src','../img/LegendOpen.png');
+                    $(this).attr('src', '../img/LegendOpen.png');
                     $('#legend-body').addClass('legend-hide');
-                    console.log('legend-hide');
-                }
-                else
-                {
+                } else {
                     $(this).attr('data-status', 'open');
-                    $(this).attr('src','../img/LegendClose.png');
+                    $(this).attr('src', '../img/LegendClose.png');
                     $('#legend-body').removeClass('legend-hide');
                 }
             });
@@ -184,6 +192,12 @@ function update_markers(map, attribute) {
 
             // Update radius
             layer.setRadius(rad);
+            
+            // Hide Hubei if box checked
+            if (hideHubei && layer.feature.properties.name == "Hubei") {
+                layer.setStyle(noFill);
+                console.log('noFill');
+            }
         }
     })
 }
@@ -273,12 +287,16 @@ function update_details_box(map, attributes, piechart) {
     $('.lblPercent').html(percentage.toPrecision(2) + '%');
     $('.lblWorldTotal').html(worldCount.toLocaleString('en'));
     $('.lblDetailsDate').html(format_date(curDate));
-    
+
     // Update Legend
     //let circleValues = get_circle_values(map, curDate);
-    let circleValues = {max: 500, mean: 150, min: 10};
+    let circleValues = {
+        max: 500,
+        mean: 150,
+        min: 10
+    };
     for (let key in circleValues) {
-        
+
         //let radius = calculate_radius(circleValues[key]);
         let radius = calculate_radius(circleValues[key]);
         $('#' + key).attr({
@@ -286,34 +304,33 @@ function update_details_box(map, attributes, piechart) {
             cy: 50 - radius,
             r: radius
         });
-        $('#' + key + '-text').text(circleValues[key] + ' Cases').attr('y', 50 - (radius));
-;
+        $('#' + key + '-text').text(circleValues[key] + ' Cases').attr('y', 50 - (radius));;
     };
-    
+
 }
 
 
 function get_circle_values(map, attribute) {
-    let min=Infinity,
-        max=-Infinity;
-    
-    map.eachLayer(function(layer) {
+    let min = Infinity,
+        max = -Infinity;
+
+    map.eachLayer(function (layer) {
         if (layer.feature) {
             let attributeValue = Number(layer.feature.properties[attribute]);
             if (attributeValue < min) {
                 min = attributeValue;
             };
-            
+
             if (attributeValue > max) {
                 max = attributeValue;
-            };  
-        };        
+            };
+        };
     });
-    
 
-    
+
+
     let mean = (max + min) / 3;
-    
+
     return {
         max: max,
         mean: mean,
@@ -344,6 +361,10 @@ var styleWorld = {
     fillColor: 'orange',
     stroke: false,
 };
+
+var noFill = {
+    fillOpacity: 0
+}
 
 // Marker Functions
 function process_data(r) {
