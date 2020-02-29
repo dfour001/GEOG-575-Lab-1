@@ -1,5 +1,5 @@
 .map-container {
-    max-width: 500px;
+    /*max-width: 500px;*/
     margin: auto;
     margin-bottom: 15px;
 }
@@ -10,7 +10,7 @@
 
 #map {
     height: 350px;
-    max-width: 500px;
+    /*max-width: 500px;*/
     background-color: #d9d9d9;
     margin-top: -8px;
 }
@@ -43,7 +43,7 @@
 
 /* Slider */
 .slide-container {
-    max-width: 500px;
+    /*max-width: 500px;*/
     margin-top: 10px;
     text-align: center;
     margin: auto;
@@ -108,7 +108,7 @@
 .mini-detail-pane {
     background-color: white;
     padding: 10px;
-    border-radius: 10px;
+    border-radius: 5px;
     font-size: 0.75rem;
     border: 1px solid rgba(0,0,0,0.5);
 }
@@ -119,6 +119,44 @@
 
 .mini-detail-pane hr {
     margin: 0px;
+}
+
+
+/* Legend */
+.legend-control-container {
+    background-color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    border: 1px solid rgba(0,0,0,0.5);
+    min-width: 90px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.legend-control-container hr {
+    margin-top: 10px;
+    margin-bottom: 0px
+}
+
+.legend-text {
+    font-size: 0.65rem;
+    
+}
+
+#collapse {
+    position: absolute;
+    top: 10px;
+    right: 5px;
+    border: 1px solid rgba(0,0,0,0.5);
+    border-radius: 5px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+    
+}
+
+.legend-hide {
+    display: none;
 }
 
 

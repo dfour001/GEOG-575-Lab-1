@@ -4,7 +4,7 @@ function init() {
         attributionControl: false
     }).fitBounds([
         [4.2149, 70.1367],
-        [54.7753,154.5117]
+        [54.7753, 154.5117]
     ]);
 
     // Add tile layer
@@ -25,7 +25,7 @@ function init() {
         dataType: 'json',
         success: function (r) {
             let attributes = process_data(r);
-            
+
             // Set up markers and add them to map
             add_data_to_map(r, map, attributes);
 
@@ -34,10 +34,14 @@ function init() {
 
             // Populate details dropdown
             setup_details_dropdown(map);
+                        
+            // Create legend
+            map.addControl(new LegendControl());
             
             // Set default details to Hubei
             $('#sel1').val('Hubei');
             update_details_box(map, attributes);
+
             
 
 
@@ -55,7 +59,7 @@ function init() {
             $('#slider').on('input', function () {
                 // Hide slider hint
                 $('#lblSliderHint').addClass('lblCurrentDate');
-                
+
                 let sliderVal = $(this).val();
                 update_markers(map, attributes[sliderVal]);
 
@@ -70,7 +74,7 @@ function init() {
             $('.skip').on('click', function () {
                 // Hide slider hint
                 $('#lblSliderHint').addClass('lblCurrentDate');
-                
+
                 let sliderVal = $('#slider').val();
 
                 if ($(this).attr('id') == 'btnPrev') {
@@ -92,14 +96,33 @@ function init() {
                 $('.lblCurrentDate').html(format_date(attributes[sliderVal]));
 
                 // Update details
-                update_details_box(map, attributes);                
+                update_details_box(map, attributes);
             });
 
             
+            // Details selector dropdown
             $('#sel1').on('change', function () {
                 update_details_box(map, attributes);
             })
 
+            
+            // Legend Collapse Button
+            $('#collapse').on('click', function() {
+                let legendState = $(this).attr('data-status');
+                if (legendState == "open") {
+                    // Collapse the legend
+                    $(this).attr('data-status', 'closed');
+                    $(this).attr('src','../img/LegendOpen.png');
+                    $('#legend-body').addClass('legend-hide');
+                    console.log('legend-hide');
+                }
+                else
+                {
+                    $(this).attr('data-status', 'open');
+                    $(this).attr('src','../img/LegendClose.png');
+                    $('#legend-body').removeClass('legend-hide');
+                }
+            });
         }
     });
 
@@ -250,6 +273,52 @@ function update_details_box(map, attributes, piechart) {
     $('.lblPercent').html(percentage.toPrecision(2) + '%');
     $('.lblWorldTotal').html(worldCount.toLocaleString('en'));
     $('.lblDetailsDate').html(format_date(curDate));
+    
+    // Update Legend
+    //let circleValues = get_circle_values(map, curDate);
+    let circleValues = {max: 500, mean: 150, min: 10};
+    for (let key in circleValues) {
+        
+        //let radius = calculate_radius(circleValues[key]);
+        let radius = calculate_radius(circleValues[key]);
+        $('#' + key).attr({
+            cx: 25,
+            cy: 50 - radius,
+            r: radius
+        });
+        $('#' + key + '-text').text(circleValues[key] + ' Cases').attr('y', 50 - (radius));
+;
+    };
+    
+}
+
+
+function get_circle_values(map, attribute) {
+    let min=Infinity,
+        max=-Infinity;
+    
+    map.eachLayer(function(layer) {
+        if (layer.feature) {
+            let attributeValue = Number(layer.feature.properties[attribute]);
+            if (attributeValue < min) {
+                min = attributeValue;
+            };
+            
+            if (attributeValue > max) {
+                max = attributeValue;
+            };  
+        };        
+    });
+    
+
+    
+    let mean = (max + min) / 3;
+    
+    return {
+        max: max,
+        mean: mean,
+        min: 25
+    };
 }
 
 
@@ -317,8 +386,6 @@ function create_marker(f, latlng, markerClass, attributes, map, piechart) {
 
     return marker
 };
-
-
 
 
 
