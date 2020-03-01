@@ -23,7 +23,7 @@ var LegendControl = L.Control.extend({
 
     onAdd: function (map) {
         let container = L.DomUtil.create('div', 'legend-control-container');
-        $(container).append('<div id="temporal-legend"><b>Legend</b></div><img id="collapse" src="../img/LegendClose.png" data-status="open">');
+        $(container).append('<div id="temporal-legend"><b>Legend</b></div><img id="collapse" src="img/LegendClose.png" data-status="open">');
         
         let legendBody = '<div id="legend-body"><hr>';
         let svg = '<svg id="attribute-legend" width="120px" height="50px">';

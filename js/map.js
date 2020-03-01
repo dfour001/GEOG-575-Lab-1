@@ -123,11 +123,11 @@ function init() {
                 if (legendState == "open") {
                     // Collapse the legend
                     $(this).attr('data-status', 'closed');
-                    $(this).attr('src', '../img/LegendOpen.png');
+                    $(this).attr('src', 'img/LegendOpen.png');
                     $('#legend-body').addClass('legend-hide');
                 } else {
                     $(this).attr('data-status', 'open');
-                    $(this).attr('src', '../img/LegendClose.png');
+                    $(this).attr('src', 'img/LegendClose.png');
                     $('#legend-body').removeClass('legend-hide');
                 }
             });
