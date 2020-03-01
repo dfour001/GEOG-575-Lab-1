@@ -6,6 +6,8 @@ body {
 .jumbotron {
     background-color: #010001;
     margin-bottom: 0px;
+    background-image: url(../img/SARS-CoV-2.jpg);
+    background-repeat: no-repeat;
 }
 
 .jumbotron .container {
@@ -100,11 +102,12 @@ body {
 .attribution-container {
     font-size: 0.75rem;
     margin: 15px;
+    padding-bottom: 10px;
 }
 
 .attribution-container p{
     margin: 0px;
-    margin-left: 10px
+    margin-left: 10px;
 }
 
 .attribution-container p:first-child {

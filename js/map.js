@@ -193,7 +193,11 @@ function calculate_radius(value) {
 }
 
 function calculate_radius_log(value) {
-    let radius = Math.log(value) / Math.log(1.2);
+    // Built-in JS base 2:
+    //let radius = Math.log2(value);
+    
+    // 
+    let radius = Math.log(value) / Math.log(1.25);
     return radius
 }
 
@@ -383,6 +387,12 @@ function create_marker(f, latlng, attributes, map, piechart) {
             // Set value of details dropdown, which will
             // trigger the details box to update with this
             // marker's details
+            
+            // Prevent Hubei from updating detail box if it is hidden
+            if (hideHubei && this.feature.properties.name == "Hubei") {
+                return
+            };
+            
             $('#sel1').val(f.properties.name);
             update_details_box(map, attributes, piechart);
         }
