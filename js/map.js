@@ -4,7 +4,8 @@ var hideHubei = false;
 function init() {
     // Create map
     var map = L.map('map', {
-        attributionControl: false
+        attributionControl: false,
+        gestureHandling: true
     }).fitBounds([
         [4.2149, 70.1367],
         [54.7753, 154.5117]
