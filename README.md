@@ -1,5 +1,6 @@
 # GEOG 575: Lab 1
 A coupe notes on the lab:
+
 1 - The fifth operator is calculate.  When the user clicks on a region, the total confirmed cases for the current date and the selected region’s % is calculated and displayed in the details box.
 
 2 - I designed the map as if it was being embedded within a news article, so I also wrote a couple paragraphs before and after about the virus.  The map was placed in a position that naturally fits with the flow of the article.
